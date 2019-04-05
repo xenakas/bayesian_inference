@@ -1,0 +1,201 @@
+---
+title: "beginning_bayes"
+output: html_document
+---
+
+# Beginning Bayes
+
+## Bayesian Inference 
+
+```{r message=FALSE, warning=FALSE}
+library(TeachBayes)
+```
+
+
+```{r}
+areas <- c(2,1,2,1,2)
+spinner_plot(areas)
+```
+```{r}
+spinner_probs(areas)
+```
+
+```{r}
+df = data.frame(Region = 1:5, areas, Probability = areas/sum(areas))
+
+df
+```
+```{r}
+spins = spinner_data(areas, 1000)
+
+bar_plot(spins)
+```
+
+```{r}
+S = summarise(group_by(data.frame(Region=spins),Region), N=n())
+S
+```
+
+Construct frequency table of spins:
+
+```{r}
+table(spins)
+```
+
+Find fraction of spins equal to 2:
+
+```{r}
+mean(spins==2 )
+```
+
+```{r}
+bayes_df = data.frame(Model=paste("Spinner", c("A","B","C","D"))) 
+
+bayes_df$Prior = rep(0.25,4)
+
+bayes_df$Likelihood = round(c(1/3,1/2,1/4,1/6),2)
+
+bayes_df = bayesian_crank(bayes_df)
+
+bayes_df
+```
+
+```{r}
+prior_post_plot(bayes_df)
+```
+
+## Binomial Probability
+
+
+$$ Likelihood = \left(^{20}_{12} \right) p^{12} (1-p)^8  $$
+
+
+```{r}
+
+bin_df = data.frame(P = seq(0.3,0.8, by = 0.1), Weight = c(1,1,2,2,1,1), Prior=c(1,1,2,2,1,1)/8) 
+
+bin_df$Likelihood = dbinom(12,size=20, prob = bin_df$P)
+
+bin_df = bayesian_crank(bin_df)
+
+round(bin_df, 3)
+```
+
+```{r}
+
+prior_post_plot(bin_df)
+
+```
+
+
+Continous prior - beta curve
+
+$$Prior = p^{a-1} (1-p)^{b-1}$$ 
+
+
+
+
+```{r}
+beta_area(0.4, 0.7, c(7,10))
+```
+
+
+
+```{r}
+beta_quantile(0.25, c(7,10))
+```
+
+```{r}
+p50 = list(x = 0.55, p = 0.5) #median 
+p90 = list(x = 0.80, p = 0.9)
+beta.select(p50, p90)
+```
+
+
+```{r}
+beta_draw(beta.select(p50, p90))
+```
+
+
+```{r}
+prior_par = c(4.7, 3.38)
+data = c(12,8)
+post_par = prior_par + data
+```
+
+Hypothesis testing: 
+
+area is only 0.004 => regect > 0.95
+
+```{r}
+beta_area(0.95,1, beta.select(p50, p90))
+```
+
+
+
+
+Computing intervals:
+
+90% interval
+
+```{r}
+beta_interval(0.9, beta.select(p50, p90))
+```
+
+bayesian intervals are shorter, as they combine info from prior and data
+
+
+Posterior simulation:
+```{r}
+?rbeta
+
+sim_p = rbeta(1000, 16.91, 11.38)
+
+hist(sim_p, freq = F)
+curve(dbeta(x, 16.91, 11.38), add=T, col="red", lwd=3)
+
+```
+
+
+
+
+```{r}
+
+prob = sum(sim_p<0.5)/1000
+
+prob
+```
+
+
+pbeta/qbeta - exact measurments
+
+rbeta - difficult posteriors
+
+
+```{r}
+pbeta(0.5, 16.91, 11.38)
+```
+
+```{r}
+qbeta(0.5, 16.91, 11.38)
+```
+
+
+
+```{r}
+quantile(sim_p, c(0.05,0.95))
+```
+
+
+```{r}
+sim_logit = log(sim_p/(1-sim_p))
+hist(sim_logit, freq = F)
+```
+
+
+
+```{r}
+quantile(sim_logit, c(0.1,0.9))
+```
+
+
