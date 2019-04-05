@@ -89,6 +89,8 @@ Kalman Filter,  Conditionally Independent Hierarchical method,  BVAR.  Time seri
 
 - [ ] [ A Bayesian Model to Forecast New Product  Performance in Domestic and International  Markets](https://www.jstor.org/stable/pdf/193212.pdf?refreqid=excelsior%3A6ffa4c175c12f924017d227a9b4194eb)
 
+- [ ] [Dynamic Bayesian Predictive Synthesis in Time Series Forecasting](https://arxiv.org/pdf/1601.07463.pdf): Posterior Computations via MCMC,  US Macroeconomic Time Series
+
 
 
 ### Bayes for small samples:
@@ -110,6 +112,13 @@ Kalman Filter,  Conditionally Independent Hierarchical method,  BVAR.  Time seri
 
 - [x] [A large Bayesian vector autoregression model for Russia ](http://www.cbr.ru/content/document/file/16690/wps_1_e.pdf)
 
+- [ ] [Forecasting with Medium and Large Bayesian VARs](http://ecares.ulb.ac.be/ecaresdocuments/seminars1011/koop.pdf)
+
+
 ### Numerucal Estimation
 
 - [ ] [Bayes or Bootstrap? A Simulation Study Comparing the Performance of Bayesian Markov Chain Monte Carlo Sampling and Bootstrapping](https://academic.oup.com/mbe/article/20/2/255/1003275)
+
+
+- [ ] [NUMERICAL METHODS FOR ESTIMATION AND INFERENCE IN BAYESIAN VAR-MODELS](https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-1255(199703)12:2<99::AID-JAE429>3.0.CO;2-A)
+
